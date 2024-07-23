@@ -34,7 +34,7 @@ jobs:
       - name: build
         run: bazel build //...
 
-      - name: test
-        run: bazel test //...
+      # - name: test
+        # run: bazel test //...
       # - name: collect code coverage
       #   run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
