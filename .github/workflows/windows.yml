@@ -1,0 +1,24 @@
+name: Windows
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: build
+        run: bazel build //...
+
+      - name: test
+        run: bazel test //...

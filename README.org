@@ -1,0 +1,41 @@
+#+TITLE: Modern C++ with Bazel starter template
+#+AUTHOR: Amol Gawai
+#+STARTUP: Overview
+* Introduction
+This is a starter template for a multi lib, multi app project born out of my needs.
+This template is based on my other starter project [[https://github.com/amolgawai/modern-cpp-cmake-starter][modern-cpp-cmake-starter]], but uses [[https://bazel.build][Bazel]] as the build system.
+
+* Guiding Principles
+** Repository Structure
+- As far as possible, all directories are self contained
+- Executables are in the "apps" directory, one directory per app
+- Libraries are in "libs" directory, one directory per library
+- Every app or library directory has one or all of directories viz. "include", "src", "tests"
+- Each namespace gets own directory inside the above three
+** Build System
+- Bazel is primary build system(version 6.0)
+- External dependencies are managed via WORKSPACE, bazel module to be added later
+* How to use this template
+1. Use the "Use this template" button on github to create a new repository with all the content of this starter, modify according to your needs.
+2. Clone this repo locally and remove/change the remote
+
+* Building with Bazel
+#+BEGIN_SRC shell
+  # build everything
+   bazel build //...
+  # build specific target
+   bazel build //path/to/pkg:target
+  # analyse with clang tidy
+  bazel build --config clang-tidy //...
+  # analyse IWYU (Include What You Use)
+  bazel build --config=iwyu //path/to/pkg:target
+  # run codecoverage for tests (e.g. greeter tests)
+   bazel coverage --combined_report=lcov [target].
+  # open the code coverage report
+   genhtml --output genhtml "$(bazel info output_path)/_coverage/_coverage_report.dat"
+#+END_SRC
+* References
+- [[https://github.com/grailbio/bazel-toolchain][LLVM Toolchain for bazel]]
+- [[https://github.com/bazelbuild/examples/tree/main/third-party-dependencies][Bazel with third party dependencies]]
+- [[https://github.com/erenon/bazel_clang_tidy][Bazel support for Clang Tidyl]]
+- [[https://github.com/storypku/bazel_iwyu][YBazel support for IWYU]]

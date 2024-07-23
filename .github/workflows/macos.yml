@@ -1,0 +1,38 @@
+name: MacOS
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+env:
+  cache-name: bazel-cache
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      # Caches and restores the bazelisk download directory, the bazel build directory.
+      - name: Cache bazelisk download
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/bazelisk
+            ~/.cache/bazel
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ github.ref }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}-development
+
+      - uses: actions/checkout@v2
+
+      - name: build
+        run: bazel build //...
+
+      - name: test
+        run: bazel test //...
