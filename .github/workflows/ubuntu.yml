@@ -32,7 +32,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: build
-        run: bazel build //...
+        with:
+          path: |
+            ~/.
+          run: bazel build //...
 
       # - name: test
         # run: bazel test //...
